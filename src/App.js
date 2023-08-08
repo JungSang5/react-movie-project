@@ -1,7 +1,22 @@
+import { useEffect, useState } from "react";
+
 function App() {
+  const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+  useEffect(() => {
+    fetch(
+      `https://yts.mx/api/v2/list_movies.json?minimun_rating=8.5&sort_by=year`
+    )
+      .then(response => response.json())
+      .then(json => {
+        setMovies(json.data.movies);
+        setLoading(false);
+      });
+  }, [])
+  console.log(movies);
   return (
     <div>
-      <h1>HELLO</h1>
+      {loading ? <h1>Loading...</h1> : null}
     </div>
   );
 }
